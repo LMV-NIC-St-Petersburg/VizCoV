@@ -22,9 +22,9 @@ groups <- list(c('LB.1', 'KU.2', 'LT.1', 'KR.1', 'KR.3', 'KS.1', 'LM.1', 'LN.1.1
 group_names <- c('FLiRT', 'FLiTI', 'FLiRT31')
 supergroup_name <- 'FLiRT'
 
-percent_treshold_to_label = .05
-percent_treshold_to_draw = .05
-count_treshold_to_draw = 5
+percent_threshold_to_label = .05
+percent_threshold_to_draw = .05
+count_threshold_to_draw = 5
 
 ########
 
@@ -64,8 +64,8 @@ plotting_fun <- function(data_yearly) {
     mutate(Percentage = Count / sum(Count), .by = Month)
   
   distingushed_lineages <- c(intersect(
-    unique(lineage_month_count$lineage[lineage_month_count$Count >= count_treshold_to_draw]),
-    unique(lineage_month_count$lineage[lineage_month_count$Percentage >= percent_treshold_to_draw])), c("Другое"))
+    unique(lineage_month_count$lineage[lineage_month_count$Count >= count_threshold_to_draw]),
+    unique(lineage_month_count$lineage[lineage_month_count$Percentage >= percent_threshold_to_draw])), c("Другое"))
   set.seed(12313)
   P36 <- Polychrome::createPalette(length(distingushed_lineages),  c("#20B2AA", "#440A7F"), prefix = NULL) %>% unname()
   
@@ -83,7 +83,7 @@ plotting_fun <- function(data_yearly) {
     geom_text(
       aes(x = Month,
           y = Percentage,
-          label = if_else(Percentage >= percent_treshold_to_label,
+          label = if_else(Percentage >= percent_threshold_to_label,
                           paste0(signif(Percentage * 100, n_signif_digits), " ", "%"),
                           NA)),
       position = "fill",
